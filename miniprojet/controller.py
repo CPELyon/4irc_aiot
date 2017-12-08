@@ -57,7 +57,7 @@ def initUART():
         print 'Starting Up Serial Monitor'
         try:
                 ser.open()
-        except SerialException:
+        except serial.SerialException:
                 print("Serial {} port not available".format(SERIALPORT))
                 exit()
 
@@ -92,4 +92,5 @@ if __name__ == '__main__':
                 server.shutdown()
                 server.server_close()
                 f.close()
+                ser.close()
                 exit()
