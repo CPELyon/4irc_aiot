@@ -75,7 +75,7 @@ if __name__ == '__main__':
         f= open(FILENAME,"a")
         print ('Press Ctrl-C to quit.')
 
-        server = ThreadedUDPServer((HOST, PORT), ThreadedUDPRequestHandler)
+        server = ThreadedUDPServer((HOST, UDP_PORT), ThreadedUDPRequestHandler)
 
         server_thread = threading.Thread(target=server.serve_forever)
         server_thread.daemon = True
