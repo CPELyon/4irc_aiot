@@ -57,7 +57,7 @@ def initUART():
         print 'Starting Up Serial Monitor'
         try:
                 ser.open()
-        except ():
+        except SerialException:
                 print("Serial {} port not available".format(SERIALPORT))
                 exit()
 
