@@ -82,7 +82,7 @@ if __name__ == '__main__':
 
         try:
                 server_thread.start()
-                print("Server started at {} port {}".format(HOST, PORT))
+                print("Server started at {} port {}".format(HOST, UDP_PORT))
                 while ser.isOpen() : 
                         # time.sleep(100)
                         if (ser.inWaiting() > 0): # if incoming bytes are waiting 
