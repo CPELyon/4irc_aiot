@@ -23,13 +23,13 @@ class ThreadedUDPRequestHandler(SocketServer.BaseRequestHandler):
         print("{}: client: {}, wrote: {}".format(current_thread.name, self.client_address, data))
         if data != "":
                         if data in MICRO_COMMANDS: # Send message through UART
-                                sendUARTMessage(response)
+                                sendUARTMessage(data)
                                 
                         elif data == "getValues()": # Sent last value received from micro-controller
                                 socket.sendto(LAST_VALUE, self.client_address) 
                                 # TODO: Create last_values_received as global variable      
                         else:
-                                print("Unknown message: ",response)
+                                print("Unknown message: ",data)
 
 class ThreadedUDPServer(SocketServer.ThreadingMixIn, SocketServer.UDPServer):
     pass
@@ -56,6 +56,10 @@ def initUART():
         print 'Starting Up Serial Monitor'
         try:
                 ser.open()
+        except ():
+                print("Serial {} port not available".format(SERIALPORT))
+                exit()
+
 
 
 def sendUARTMessage(msg):
