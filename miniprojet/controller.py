@@ -42,7 +42,7 @@ BAUDRATE = 115200
 ser = serial.Serial()
 
 def initUART():        
-        ser = serial.Serial(SERIALPORT, BAUDRATE)
+        # ser = serial.Serial(SERIALPORT, BAUDRATE)
         ser.bytesize = serial.EIGHTBITS #number of bits per bytes
         ser.parity = serial.PARITY_NONE #set parity check: no parity
         ser.stopbits = serial.STOPBITS_ONE #number of stop bits
