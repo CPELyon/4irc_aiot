@@ -67,6 +67,7 @@ def initUART():
 
 def sendUARTMessage(msg):
     ser.write(msg)
+    print("Message <" + msg + "> sent to micro-controller." )
 
 
 # Main program logic follows:
