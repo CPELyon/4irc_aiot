@@ -109,4 +109,5 @@ if __name__ == '__main__':
                         fout.close()
                 ser.close()
                 thread.kill_received=True 
+                os._exit(1)
                 exit()
