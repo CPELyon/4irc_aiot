@@ -51,6 +51,7 @@ if __name__ == '__main__':
                         if (ser.inWaiting() > 0): # if incoming bytes are waiting 
                                 data_str = ser.read(ser.inWaiting()) 
                                 json_data = json.loads(data_str)
+                                json_data["date"] = datetime.datetime.now()
                                 jstr = json.dumps(json_data, indent=4)
                                 # f.write(jstr)
                                 print(jstr)
