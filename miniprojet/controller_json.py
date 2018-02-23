@@ -46,9 +46,9 @@ def startupCheck():
         print ("File exists and is readable")
     else:
         print ("File is missing, creating file...")
-        with io.open(FILENAME, 'w') as db_file:
-            db_file.write(json.dumps(VALUES))
-
+        with open(FILENAME, 'w') as db_file:
+                db_file.write(json.dumps(VALUES))
+                db_file.close()
 # Main program logic follows:
 if __name__ == '__main__':
         initUART()
