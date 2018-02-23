@@ -9,7 +9,7 @@ import simplejson as json
 import datetime 
 
 FILENAME        = "/home/pi/values.json"
-
+VALUES          = '{"values": []}'
 
 # send serial message 
 SERIALPORT = "/dev/ttyUSB0"
@@ -44,19 +44,34 @@ def initUART():
 if __name__ == '__main__':
         initUART()
         #f= open(FILENAME,"a")
+        try:
+                with open(FILENAME, 'r') as fin:
+                        VALUES = json.load(fin)
+        except FileNotFoundError as exc:
+                pass
+
+        data=json.loads(VALUES)
+        
         print ('Press Ctrl-C to quit.')
         try:
                 while ser.isOpen() : 
                         # time.sleep(100)
                         if (ser.inWaiting() > 0): # if incoming bytes are waiting 
                                 data_str = ser.readline().strip().strip('\x00').strip() 
-                                print(repr(data_str))
+                                # print(repr(data_str))
 				json_data = json.loads(data_str)
                                 json_data["date"] = unicode(datetime.datetime.now())
                                 jstr = json.dumps(json_data, indent=4)
+                                data["values"].append(json_data)
                                 # f.write(jstr)
                                 print(jstr)
         except (KeyboardInterrupt, SystemExit):
-                f.close()
+                try:
+                        if data:
+                                with open(FILENAME, 'w') as fout:
+                                        json.dump(data, fout)
+                        except UnboundLocalError as exc:
+                                with open(FILENAME, 'w') as fout:
+                                        json.dump(data, fout)
                 ser.close()
                 exit()
