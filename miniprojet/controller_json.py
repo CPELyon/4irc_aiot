@@ -46,7 +46,7 @@ def startupCheck():
         print ("File exists and is readable")
     else:
         print ("File is missing, creating file...")
-        with io.open(PATH, 'w') as db_file:
+        with io.open(FILENAME, 'w') as db_file:
             db_file.write(json.dumps(VALUES))
 
 # Main program logic follows:
