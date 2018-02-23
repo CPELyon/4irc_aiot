@@ -23,7 +23,7 @@ ser = serial.Serial()
 
 KEEP_RUNNING = True
 
-def keep_running():
+def keepRunning():
     return KEEP_RUNNING
 
 def initUART():        
