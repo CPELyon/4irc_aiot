@@ -10,6 +10,7 @@ import datetime
 import io
 import os
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import threading 
 
 FILENAME        = "/home/pi/values.json"
 VALUES          = json.loads('{"values": []}')
@@ -78,7 +79,8 @@ def startupCheck():
 if __name__ == '__main__':
         initUART()
         startupCheck()
-        runWebServer()
+        thread= threading.Thread(targe=runWebServer)
+        thread.start()
         #f= open(FILENAME,"a")
         with open(FILENAME, 'r') as fin:
                 VALUES = json.load(fin)
