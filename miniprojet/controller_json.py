@@ -12,6 +12,7 @@ import os
 
 FILENAME        = "/home/pi/values.json"
 VALUES          = json.loads('{"values": []}')
+MAX_FILE_LEN         = 10000
 
 # send serial message 
 SERIALPORT = "/dev/ttyUSB0"
@@ -70,6 +71,8 @@ if __name__ == '__main__':
                                 json_data["date"] = unicode(datetime.datetime.now())
                                 jstr = json.dumps(json_data, indent=4)
                                 VALUES["values"].append(json_data)
+                                if len(VALUES["values"]) > MAX_FILE_LEN :
+                                        VALUES["values"].pop(0)
                                 # f.write(jstr)
                                 print(jstr)
         except (KeyboardInterrupt, SystemExit):
