@@ -78,6 +78,7 @@ if __name__ == '__main__':
         except (KeyboardInterrupt, SystemExit):
                 with open(FILENAME, 'w') as fout:
                         json.dump(VALUES, fout)
+                        print("Saved " + str(len(VALUES["values"])) + "entries in json file.")
                         fout.close()
                 ser.close()
                 exit()
