@@ -108,4 +108,5 @@ if __name__ == '__main__':
                         print("Saved " + str(len(VALUES["values"])) + "entries in json file.")
                         fout.close()
                 ser.close()
+                thread.kill_received=True 
                 exit()
