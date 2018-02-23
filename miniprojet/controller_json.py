@@ -7,9 +7,11 @@ import sys
 import serial
 import simplejson as json
 import datetime 
+import io
+import os
 
 FILENAME        = "/home/pi/values.json"
-VALUES          = '{"values": []}'
+VALUES          = json.loads('{"values": []}')
 
 # send serial message 
 SERIALPORT = "/dev/ttyUSB0"
@@ -39,18 +41,23 @@ def initUART():
                 exit()
 
 
+def startupCheck():
+    if os.path.isfile(FILENAME):
+        print ("File exists and is readable")
+    else:
+        print ("File is missing, creating file...")
+        with io.open(PATH, 'w') as db_file:
+            db_file.write(json.dumps(VALUES))
 
 # Main program logic follows:
 if __name__ == '__main__':
         initUART()
+        startupCheck()
         #f= open(FILENAME,"a")
-        try:
-                with open(FILENAME, 'r') as fin:
-                        VALUES = json.load(fin)
-        except FileNotFoundError as exc:
-                pass
+        with open(FILENAME, 'r') as fin:
+                VALUES = json.load(fin)
+                fin.close()
 
-        data=json.loads(VALUES)
         
         print ('Press Ctrl-C to quit.')
         try:
@@ -62,12 +69,12 @@ if __name__ == '__main__':
 				json_data = json.loads(data_str)
                                 json_data["date"] = unicode(datetime.datetime.now())
                                 jstr = json.dumps(json_data, indent=4)
-                                data["values"].append(json_data)
+                                VALUES["values"].append(json_data)
                                 # f.write(jstr)
                                 print(jstr)
         except (KeyboardInterrupt, SystemExit):
-                if data:
-                        with open(FILENAME, 'w') as fout:
-                                json.dump(data, fout)
+                with open(FILENAME, 'w') as fout:
+                        json.dump(VALUES, fout)
+                        fout.close()
                 ser.close()
                 exit()
