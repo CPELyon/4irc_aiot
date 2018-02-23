@@ -52,9 +52,9 @@ def initUART():
 
         # ser.timeout = 0             #non-block read
         # ser.timeout = 2              #timeout block read
-        # ser.xonxoff = False     #disable software flow control
-        # ser.rtscts = False     #disable hardware (RTS/CTS) flow control
-        # ser.dsrdtr = False       #disable hardware (DSR/DTR) flow control
+        ser.xonxoff = False     #disable software flow control
+        ser.rtscts = False     #disable hardware (RTS/CTS) flow control
+        ser.dsrdtr = False       #disable hardware (DSR/DTR) flow control
         #ser.writeTimeout = 0     #timeout for write
         print 'Starting Up Serial Monitor'
         try:
@@ -87,7 +87,7 @@ if __name__ == '__main__':
                 while ser.isOpen() : 
                         # time.sleep(100)
                         if (ser.inWaiting() > 0): # if incoming bytes are waiting 
-                                data_str = ser.read(ser.inWaiting()).decode('ascii') #read the bytes and convert from binary array to ASCII
+                                data_str = ser.read(ser.inWaiting()) 
                                 f.write(data_str)
                                 LAST_VALUE = data_str
                                 print(data_str)
