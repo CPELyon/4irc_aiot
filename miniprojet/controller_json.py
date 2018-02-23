@@ -79,7 +79,7 @@ def startupCheck():
 if __name__ == '__main__':
         initUART()
         startupCheck()
-        thread= threading.Thread(targe=runWebServer)
+        thread= threading.Thread(target=runWebServer)
         thread.start()
         #f= open(FILENAME,"a")
         with open(FILENAME, 'r') as fin:
