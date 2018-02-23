@@ -47,7 +47,7 @@ if __name__ == '__main__':
         try:
                 with open(FILENAME, 'r') as fin:
                         VALUES = json.load(fin)
-        except FileNotFoundError:
+        except FileNotFoundError as exc:
                 pass
 
         data=json.loads(VALUES)
