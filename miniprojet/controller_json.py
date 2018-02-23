@@ -12,7 +12,7 @@ import os
 
 FILENAME        = "/home/pi/values.json"
 VALUES          = json.loads('{"values": []}')
-MAX_FILE_LEN         = 10000
+MAX_FILE_LEN         = 45
 
 # send serial message 
 SERIALPORT = "/dev/ttyUSB0"
