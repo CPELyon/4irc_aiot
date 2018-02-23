@@ -21,6 +21,11 @@ SERIALPORT = "/dev/ttyUSB0"
 BAUDRATE = 115200
 ser = serial.Serial()
 
+KEEP_RUNNING = True
+
+def keep_running():
+    return KEEP_RUNNING
+
 def initUART():        
         # ser = serial.Serial(SERIALPORT, BAUDRATE)
         ser.port=SERIALPORT
@@ -65,8 +70,9 @@ def runWebServer(server_class=HTTPServer, handler_class=S, port=80):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print 'Starting httpd...'
-    httpd.serve_forever()
-
+    while keepRunning():
+        #httpd.serve_forever()
+        httpd.handle_request()
 def startupCheck():
     if os.path.isfile(FILENAME):
         print ("File exists and is readable")
@@ -108,6 +114,7 @@ if __name__ == '__main__':
                         print("Saved " + str(len(VALUES["values"])) + "entries in json file.")
                         fout.close()
                 ser.close()
-                thread.kill_received=True 
-                os._exit(1)
+                KEEP_RUNNING=False
+                thread.kill_received=True                 
+                # os._exit(1)
                 exit()
