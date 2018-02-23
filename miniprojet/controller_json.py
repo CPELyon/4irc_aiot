@@ -9,10 +9,11 @@ import simplejson as json
 import datetime 
 import io
 import os
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
 FILENAME        = "/home/pi/values.json"
 VALUES          = json.loads('{"values": []}')
-MAX_FILE_LEN         = 45
+MAX_FILE_LEN         = 45000
 
 # send serial message 
 SERIALPORT = "/dev/ttyUSB0"
@@ -41,6 +42,29 @@ def initUART():
                 print("Serial {} port not available".format(SERIALPORT))
                 exit()
 
+class S(BaseHTTPRequestHandler):
+    def _set_headers(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+
+    def do_GET(self):
+        self._set_headers()
+        self.wfile.write("<html><body><h1>hi!</h1></body></html>")
+
+    def do_HEAD(self):
+        self._set_headers()
+        
+    def do_POST(self):
+        # Doesn't do anything with posted data
+        self._set_headers()
+        self.wfile.write("<html><body><h1>POST!</h1></body></html>")
+        
+def runWebServer(server_class=HTTPServer, handler_class=S, port=80):
+    server_address = ('', port)
+    httpd = server_class(server_address, handler_class)
+    print 'Starting httpd...'
+    httpd.serve_forever()
 
 def startupCheck():
     if os.path.isfile(FILENAME):
@@ -54,6 +78,7 @@ def startupCheck():
 if __name__ == '__main__':
         initUART()
         startupCheck()
+        runWebServer()
         #f= open(FILENAME,"a")
         with open(FILENAME, 'r') as fin:
                 VALUES = json.load(fin)
