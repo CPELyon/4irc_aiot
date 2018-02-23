@@ -49,9 +49,10 @@ if __name__ == '__main__':
                 while ser.isOpen() : 
                         # time.sleep(100)
                         if (ser.inWaiting() > 0): # if incoming bytes are waiting 
-                                data_str = ser.read(ser.inWaiting()) 
-                                json_data = json.loads(data_str)
-                                json_data["date"] = datetime.datetime.now()
+                                data_str = ser.readline().strip().strip('\x00').strip() 
+                                print(repr(data_str))
+				json_data = json.loads(data_str)
+                                json_data["date"] = unicode(datetime.datetime.now())
                                 jstr = json.dumps(json_data, indent=4)
                                 # f.write(jstr)
                                 print(jstr)
