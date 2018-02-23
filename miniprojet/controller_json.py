@@ -47,7 +47,7 @@ if __name__ == '__main__':
         try:
                 with open(FILENAME, 'r') as fin:
                         VALUES = json.load(fin)
-        except FileNotFoundError as exc:
+        except FileNotFoundError:
                 pass
 
         data=json.loads(VALUES)
@@ -66,12 +66,8 @@ if __name__ == '__main__':
                                 # f.write(jstr)
                                 print(jstr)
         except (KeyboardInterrupt, SystemExit):
-                try:
-                        if data:
-                                with open(FILENAME, 'w') as fout:
-                                        json.dump(data, fout)
-                        except UnboundLocalError as exc:
-                                with open(FILENAME, 'w') as fout:
-                                        json.dump(data, fout)
+                if data:
+                        with open(FILENAME, 'w') as fout:
+                                json.dump(data, fout)
                 ser.close()
                 exit()
