@@ -34,8 +34,8 @@ LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 #LED_STRIP      = ws.WS2811_STRIP_GRB   # Strip type and colour ordering
 LED_STRIP       = ws.SK6812_STRIP_RGBW
 UDP_PORT       = 10000
-PLAYER1_ADDRESS = "127.0.0.1"
-PLAYER2_ADDRESS= "127.0.0.1"
+PLAYER1_ADDRESS = ("127.0.0.1", UDP_PORT)
+PLAYER2_ADDRESS= ("127.0.0.1", UDP_PORT)
 STEP           = .5
 white = Color(127, 127, 127)
 blue = Color(0, 0, 127)
@@ -184,7 +184,9 @@ if __name__ == '__main__':
                                 tour = 0
                         elif response == "(1)": # Player 1 moved
                                 print("Player 1 moved")
+                                print("Type address: " + str(type(address)))
                                 PLAYER1_ADDRESS=address
+                                print ("Type PLAYER1_ADDRESS: " + str(type(PLAYER1_ADDRESS)))
                                 position=move(strip,position,-1)
                         elif response == "(2)": # Player 2 moved
                                 print("Player 2 moved")
