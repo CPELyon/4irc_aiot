@@ -14,4 +14,9 @@ To install the libraries in a raspberry pi from zero you need to follow this pro
 6. Run the game !
 ```
 sudo python androidgame.py
-````
+```
+7. If you want to start the game at each boot of the raspberry, put this line on `/etc/rc.local` just before the line `exit 0`
+```
+sudo /usr/bin/python {path to your project}/androidgame.py &
+```
+
