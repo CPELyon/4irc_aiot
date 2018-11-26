@@ -190,7 +190,9 @@ if __name__ == '__main__':
                                 position=move(strip,position,-1)
                         elif response == "(2)": # Player 2 moved
                                 print("Player 2 moved")
+                                print("Type address: " + str(type(address)))
                                 PLAYER2_ADDRESS=address
+                                print ("Type PLAYER2_ADDRESS: " + str(type(PLAYER2_ADDRESS)))
                                 position = move(strip,position,1)
                         else:
                                 print("Unknown message: ",response)
