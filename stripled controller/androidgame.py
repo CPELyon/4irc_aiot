@@ -34,6 +34,8 @@ LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 #LED_STRIP      = ws.WS2811_STRIP_GRB   # Strip type and colour ordering
 LED_STRIP       = ws.SK6812_STRIP_RGBW
 UDP_PORT       = 10000
+PLAYER1_ADDRESS = "127.0.0.1"
+PLAYER2_ADDRESS= "127.0.0.1"
 STEP           = .5
 white = Color(127, 127, 127)
 blue = Color(0, 0, 127)
@@ -115,11 +117,21 @@ def setWinner(strip,winner):
                 colorWipe(strip,blue)
                 colorWipe(strip,blue)
                 colorWipe(strip,blue)
+                sendMessageToClient("(1)",PLAYER1_ADDRESS)
+                sendMessageToClient("(0)",PLAYER2_ADDRESS)
         else:
                 colorWipe(strip,green)
                 colorWipe(strip,green)
                 colorWipe(strip,green)
+                sendMessageToClient("(0)",PLAYER1_ADDRESS)
+                sendMessageToClient("(1)",PLAYER2_ADDRESS)
         return initGame(strip)
+
+def sendMessageToClient(msg,udp_address):
+        sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+        sock.sendto(msg,udp_address)
+        sock.close()
+
 def clearStrip(strip):
         for i in range(strip.numPixels()):
                 strip.setPixelColor(i,Color(0,0,0))
@@ -158,7 +170,7 @@ if __name__ == '__main__':
         sock.bind(server_address)
         print("Listening on port ", str(UDP_PORT))
         # socket.listen(5)
-	while True:
+        while True:
                 print("Position: " + str(position))
                 # client, address = socket.accept()
                 response, address = sock.recvfrom(4096)
@@ -172,9 +184,11 @@ if __name__ == '__main__':
                                 tour = 0
                         elif response == "(1)": # Player 1 moved
                                 print("Player 1 moved")
+                                PLAYER1_ADDRESS=address
                                 position=move(strip,position,-1)
                         elif response == "(2)": # Player 2 moved
                                 print("Player 2 moved")
+                                PLAYER2_ADDRESS=address
                                 position = move(strip,position,1)
                         else:
                                 print("Unknown message: ",response)
