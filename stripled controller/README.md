@@ -11,7 +11,8 @@ To install the libraries in a raspberry pi from zero you need to follow this pro
 3. Install git 
 4. Clone the neopixel driver repository : `https://github.com/jgarff/rpi_ws281x` and follow the install instruction and those of python wrapper.
 5. Connect GND and GPIO18 to the GND and data input of the ledstrip.
-6. Run the game !
+   `https://pinout.xyz/`
+7. Run the game !
 ```
 sudo python androidgame.py
 ```
